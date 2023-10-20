@@ -1,0 +1,107 @@
+@import url('https://v1.fontapi.ir/css/Vazir');
+.list {
+	text-align: center;
+	font-size: 36px;
+} 
+.result {
+	text-align: center;
+	font-size: 36px;
+} 
+.buttonsline {
+	text-align: center;
+} 
+
+
+/* Buttons */
+.button_list {
+	background-color: dodgerblue;
+	color: white;
+	padding: 8px;
+	text-decoration: none;
+	font-size: 18px; 
+	line-height: 25px;
+	border-radius: 4px;
+} 
+.button_gen {
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Vazir, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+}
+
+.button_gen:not(:disabled):hover,
+.button_gen:not(:disabled):focus {
+  outline: 0;
+  background: #7877f2;
+}
+
+#randnumber{
+	font-size: 36px;
+}
+
+
+
+* {box-sizing: border-box;}
+body { 
+  margin: 0;
+  font-family: Vazir, Arial, Helvetica, sans-serif;
+}
+
+.header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 20px 10px;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a.menu {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+

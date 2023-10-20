@@ -1,21 +1,21 @@
 <html>
+	<link rel="preconnect" href="//fdn.fontcdn.ir">
+	<link rel="preconnect" href="//v1.fontapi.ir">
+	<link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet">
     <head>
-        <script src="https://cdn.jsdelivr.net/gh/nastyox/Rando.js@master/code/plain-javascript/2.0.0/rando-min.js"></script>
-        <script>
-            function showRandomNumber(){
-                document.getElementById("myNumber").innerHTML = rando(5, 10);
-            }
-        </script>
-        <style>
-            #myNumber{
-                font-size:100px;
-                text-align:center;
-                margin:50px auto;
-                font-family:Arial, sans-serif;
-            }
-        </style>
+		<link rel="stylesheet" href="styles.css">
     </head>
     <body onload="showRandomNumber();">
-        <div id="myNumber"></div>
+		<div class="header">
+			<a href="index.html" class="logo">سوال ساز رندوم</a>
+			<div class="header-right">
+				<a class="menu" href="#home">صفحۀ اصلی</a>
+			</div>
+		</div>
+		<div class="list">
+			<span dir="rtl">لیست سوال ساز ها:<br /><br /></span>
+			<a class="button_list" href="q_units.html">تبدیل واحد ها</a>
+			<!-- <a class="button_gen" href="#home">صفحۀ اصلی</a>-->
+		<div>
     </body>
 </html>

@@ -1,0 +1,53 @@
+<html>
+	<link rel="preconnect" href="//fdn.fontcdn.ir">
+	<link rel="preconnect" href="//v1.fontapi.ir">
+	<link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet">
+    <head>
+		<link rel="stylesheet" href="styles.css">
+        <script src="https://cdn.jsdelivr.net/gh/nastyox/Rando.js@master/code/plain-javascript/2.0.0/rando-min.js"></script>
+        <script>
+			const prefixes = ["ترا", "گیگا", "مگا", "کیلو", "", "سانتی", "میلی", "میکرو", "نانو", "پیکو"];
+			const units = ["متر", "گرم", "ثانیه", "دقیقه"];
+            function Generate(){
+				const unit = units[Math.floor(Math.random() * units.length)];
+				document.getElementById("r1p1").innerHTML = "فرض:";
+				document.getElementById("r1p2").innerHTML = rando(1, 100);
+				document.getElementById("r1p3").innerHTML = prefixes[Math.floor(Math.random() * prefixes.length)];
+				document.getElementById("r1p4").innerHTML = unit;
+				
+				document.getElementById("r2p1").innerHTML = "حکم:";
+				document.getElementById("r2p2").innerHTML = "???";
+				document.getElementById("r2p3").innerHTML = prefixes[Math.floor(Math.random() * prefixes.length)];
+				document.getElementById("r2p4").innerHTML = unit;
+            }
+        </script>
+
+    </head>
+    <body>
+		<div class="header">
+			<a href="#default" class="logo">سوال ساز رندوم</a>
+			<div class="header-right">
+				<a class="menu" href="#home">صفحۀ اصلی</a>
+			</div>
+		</div>
+		<br /><br />
+		<div class="buttonsline"><p dir="rtl"><button class="button_gen" role="button" onclick = "Generate()">بساز!</button></div>
+		<div class="result">
+			<p dir="rtl">
+				<span id="r1p1"></span>
+				<math display="inline">
+					<mrow>  
+						<mi id="r1p2"></mi>
+					</mrow>
+				</math>
+				<span id="r1p3"></span>
+				<span id="r1p4"></span><br />
+				
+				<span id="r2p1"></span>
+				<span id="r2p2"></span>
+				<span id="r2p3"></span>
+				<span id="r2p4"></span>
+			</p>
+		<div>
+    </body>
+</html>
