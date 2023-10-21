@@ -5,22 +5,103 @@
     <head>
 		<link rel="stylesheet" href="styles.css">
         <script src="https://cdn.jsdelivr.net/gh/nastyox/Rando.js@master/code/plain-javascript/2.0.0/rando-min.js"></script>
+		
+		
+		
         <script>
-			const prefixes = ["ترا", "گیگا", "مگا", "کیلو", "", "سانتی", "میلی", "میکرو", "نانو", "پیکو"];
-			const units = ["متر", "گرم", "ثانیه", "دقیقه"];
-            function Generate(){
-				const unit = units[Math.floor(Math.random() * units.length)];
-				document.getElementById("r1p1").innerHTML = "فرض:";
-				document.getElementById("r1p2").innerHTML = rando(1, 100);
-				document.getElementById("r1p3").innerHTML = prefixes[Math.floor(Math.random() * prefixes.length)];
-				document.getElementById("r1p4").innerHTML = unit;
+			const properties = ["time", "time", "length", "length", "length", "mass", "mass", "area", "volume"];
+			const prefixes = ["tera", "giga", "mega", "kilo", "none", "centi", "mili", "micro", "nano", "pico"];
+			const units_time = ["sec", "min", "hr", "day"];
+			const units_length = ["meter", "inch", "foot", "yard", "mile"];
+			const units_mass = ["gram", "pound"]
+			const units_all = units_time.concat(units_length);
+			
+			const def_fa = {
+				tera: ["ترا", "T", "9"],
+				giga: ["گیگا", "G", "6"],
+				mega: ["مگا", "M", "3"],
+				kilo: ["مگا", "M", "3"],
+				none: ["", "", "0"],
+				centi: ["سانتی", "c", "-2"],
+				mili: ["میلی", "m", "-3"],
+				micro: ["میکرو", "μ", "-6"],
+				nano: ["نانو", "n", "-9"],
+				pico: ["پیکو", "p", "-12"],
 				
+				sec: ["ثانیه", "0"],
+				min: ["دقیقه", "0"],
+				hr: ["ساعت", "0"],
+				day: ["روز", "0"],
+				
+				meter: ["متر", "m"],
+				inch: ["اینچ", "in"],
+				foot: ["فوت", "ft"],
+				yard: ["یارد", "yd"],
+				mile: ["مایل", "mi"],
+				
+				gram: ["گرم", "hr"],
+				pound: ["پوند", "lbs"],
+			};
+		
+            function Generate(){
+				const s_sub = document.querySelectorAll('input[name="r_sub"]');
+				const s_fa = document.querySelectorAll('input[name="r_fa"]');
+				let v_sub;
+				// console.log(def_fa.tera[0]);
+				// console.log(y[`${x[Math.floor(Math.random() * x.length)]}`]);
+				for (const radiovalues of s_sub) {
+					if (radiovalues.checked){
+						v_sub = radiovalues.value;
+						break;
+					}
+				}
+				const property = rando(0, 8);
+				
+				document.getElementById("r1p1").innerHTML = "فرض:";
 				document.getElementById("r2p1").innerHTML = "حکم:";
 				document.getElementById("r2p2").innerHTML = "???";
-				document.getElementById("r2p3").innerHTML = prefixes[Math.floor(Math.random() * prefixes.length)];
-				document.getElementById("r2p4").innerHTML = unit;
+				/* if (v_sub = "p"){
+					document.getElementById("r1p2").innerHTML = rando(1, 100);
+				} else if (v_sub = "y"){
+					document.getElementById("r1p2").innerHTML = rando(1, 100);
+				} */
+				console.log(v_sub)
+				if (v_sub == "p"){
+				console.log("e1")
+					let unit;
+					unit = def_fa[`${units_all[Math.floor(Math.random() * units_all.length)]}`];
+					const pref1 = def_fa[`${prefixes[Math.floor(Math.random() * prefixes.length)]}`];
+					const pref2 = def_fa[`${prefixes[Math.floor(Math.random() * prefixes.length)]}`];
+					document.getElementById("r1p2").innerHTML = rando(1, 100);
+					document.getElementById("r1p3").innerHTML = pref1[0];
+					document.getElementById("r1p4").innerHTML = unit[0];
+					document.getElementById("r2p3").innerHTML = pref2[0];
+					document.getElementById("r2p4").innerHTML = unit[0];
+				} else if (v_sub == "u"){
+				console.log("e2")
+					let unit;
+					switch (property){
+						case 0: unit = units_time[Math.floor(Math.random() * units_time.length)]; break;
+						case 1: unit = units_time[Math.floor(Math.random() * units_time.length)]; break;
+						case 2: unit = units_length[Math.floor(Math.random() * units_length.length)]; break;
+						case 3: unit = units_length[Math.floor(Math.random() * units_length.length)]; break;
+						case 4: unit = units_length[Math.floor(Math.random() * units_length.length)]; break;
+						case 5: unit = units_mass[Math.floor(Math.random() * units_mass.length)]; break;
+						case 6: unit = units_mass[Math.floor(Math.random() * units_mass.length)]; break;
+						case 7: unit = `${units_length[Math.floor(Math.random() * units_length.length)]}2`; break;
+						case 8: unit = `${units_length[Math.floor(Math.random() * units_length.length)]}3`; break;
+					}
+					document.getElementById("r1p2").innerHTML = rando(1, 100);
+					document.getElementById("r1p3").innerHTML = prefixes[Math.floor(Math.random() * prefixes.length)];
+					document.getElementById("r1p4").innerHTML = def_fa["${unit}"];
+					document.getElementById("r2p3").innerHTML = prefixes[Math.floor(Math.random() * prefixes.length)];
+					document.getElementById("r2p4").innerHTML = unit;
+				}
+					
             }
         </script>
+
+
 
     </head>
     <body>
@@ -31,6 +112,32 @@
 			</div>
 		</div>
 		<br /><br />
+		<div class="settings">
+			<div>
+				<label>
+					<input type="radio" name="r_sub" value="p" checked="">
+					<span>تبدیل پیشوند</span>
+				</label>
+				<label>
+					<input type="radio" name="r_sub" value="u">
+					<span>تبدیل یکا</span>
+				</label>
+				<label>
+					<input type="radio" name="r_sub" value="pu">
+					<span>ترکیبی</span>
+				</label>
+			</div>
+			<!-- <div>
+				<label>
+					<input type="radio" name="r_fa" value="0" checked="">
+					<span>نوشتاری</span>
+				</label>
+				<label>
+					<input type="radio" name="r_fa" value="1">
+					<span>ریاضی</span>
+				</label>
+			</div> -->
+		</div>
 		<div class="buttonsline"><p dir="rtl"><button class="button_gen" role="button" onclick = "Generate()">بساز!</button></div>
 		<div class="result">
 			<p dir="rtl">
