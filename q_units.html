@@ -55,7 +55,7 @@
 						break;
 					}
 				}
-				const property = rando(0, 8);
+				const property = rando(0, 6);
 				
 				document.getElementById("r1p1").innerHTML = "فرض:";
 				document.getElementById("r2p1").innerHTML = "حکم:";
@@ -65,9 +65,7 @@
 				} else if (v_sub = "y"){
 					document.getElementById("r1p2").innerHTML = rando(1, 100);
 				} */
-				console.log(v_sub)
 				if (v_sub == "p"){
-				console.log("e1")
 					let unit;
 					unit = def_fa[`${units_all[Math.floor(Math.random() * units_all.length)]}`];
 					const pref1 = def_fa[`${prefixes[Math.floor(Math.random() * prefixes.length)]}`];
@@ -78,24 +76,30 @@
 					document.getElementById("r2p3").innerHTML = pref2[0];
 					document.getElementById("r2p4").innerHTML = unit[0];
 				} else if (v_sub == "u"){
-				console.log("e2")
 					let unit;
-					switch (property){
-						case 0: unit = units_time[Math.floor(Math.random() * units_time.length)]; break;
-						case 1: unit = units_time[Math.floor(Math.random() * units_time.length)]; break;
-						case 2: unit = units_length[Math.floor(Math.random() * units_length.length)]; break;
-						case 3: unit = units_length[Math.floor(Math.random() * units_length.length)]; break;
-						case 4: unit = units_length[Math.floor(Math.random() * units_length.length)]; break;
-						case 5: unit = units_mass[Math.floor(Math.random() * units_mass.length)]; break;
-						case 6: unit = units_mass[Math.floor(Math.random() * units_mass.length)]; break;
-						case 7: unit = `${units_length[Math.floor(Math.random() * units_length.length)]}2`; break;
-						case 8: unit = `${units_length[Math.floor(Math.random() * units_length.length)]}3`; break;
+					function MakeUnit(){
+						switch (property){
+							case 0: return units_time[Math.floor(Math.random() * units_time.length)]; break;
+							case 1: return units_time[Math.floor(Math.random() * units_time.length)]; break;
+							case 2: return units_length[Math.floor(Math.random() * units_length.length)]; break;
+							case 3: return units_length[Math.floor(Math.random() * units_length.length)]; break;
+							case 4: return units_length[Math.floor(Math.random() * units_length.length)]; break;
+							case 5: return units_mass[Math.floor(Math.random() * units_mass.length)]; break;
+							case 6: return units_mass[Math.floor(Math.random() * units_mass.length)]; break;
+						}
+					}
+					let prop1 = def_fa[`${MakeUnit()}`];
+					let prop2 = def_fa[`${MakeUnit()}`];
+					while(true){
+						if (prop1 == prop2) { 
+							prop2 = def_fa[`${MakeUnit()}`];
+						} else { break; }
 					}
 					document.getElementById("r1p2").innerHTML = rando(1, 100);
-					document.getElementById("r1p3").innerHTML = prefixes[Math.floor(Math.random() * prefixes.length)];
-					document.getElementById("r1p4").innerHTML = def_fa["${unit}"];
-					document.getElementById("r2p3").innerHTML = prefixes[Math.floor(Math.random() * prefixes.length)];
-					document.getElementById("r2p4").innerHTML = unit;
+					document.getElementById("r1p3").innerHTML = prop1[0];
+					document.getElementById("r1p4").innerHTML = "";
+					document.getElementById("r2p3").innerHTML = prop2[0];
+					document.getElementById("r2p4").innerHTML = "";
 				}
 					
             }
@@ -127,7 +131,7 @@
 					<span>ترکیبی</span>
 				</label>
 			</div>
-			<!-- <div>
+			<div>
 				<label>
 					<input type="radio" name="r_fa" value="0" checked="">
 					<span>نوشتاری</span>
@@ -136,7 +140,7 @@
 					<input type="radio" name="r_fa" value="1">
 					<span>ریاضی</span>
 				</label>
-			</div> -->
+			</div>
 		</div>
 		<div class="buttonsline"><p dir="rtl"><button class="button_gen" role="button" onclick = "Generate()">بساز!</button></div>
 		<div class="result">
