@@ -1,0 +1,73 @@
+<html>
+	<link rel="preconnect" href="//fdn.fontcdn.ir">
+	<link rel="preconnect" href="//v1.fontapi.ir">
+	<link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet">
+    <head>
+		<link rel="stylesheet" href="styles.css">
+        <script src="https://cdn.jsdelivr.net/gh/nastyox/Rando.js@master/code/plain-javascript/2.0.0/rando-min.js"></script>
+		<!-- <script src="keys.js"></script> -->
+        <script>
+		
+			const elements = {
+				1:"هیدروژن", 2:"هلیم", 3:"لیتیم",
+				4:"برلیم", 5:"بور", 6:"کربن",
+				7:"نیتروژن", 8:"اکسیژن", 9:"فلوئور",
+				10:"نئون", 11:"سدیم", 12:"منیزیم",
+				13:"آلومینیم", 14:"سیلیسیم", 15:"فسفر",
+				16:"گوگرد", 17:"کلر", 18:"آرگون",
+				19:"پتاسیم", 20:"سدیم", 21:"اسکاندیم",
+				22:"تیتانیم", 23:"وانادیم", 24:"کروم",
+				25:"منگنز", 26:"آهن", 27:"کبالت",
+				28:"نیکل", 29:"مس", 30:"روی",
+				31:"گالیم", 32:"ژرمانیم", 33:"آرسنیک",
+				34:"سلنیم", 35:"برم", 36:"کریپتون"
+			};
+			
+			let res = "";
+			
+			addEventListener("keypress", logKey);
+			function logKey(e) {
+				if (e.code == "KeyX") {
+					Generate();
+					console.log("G");
+				}
+			};
+
+            function Generate(){
+				let type = rando(1, 2);
+				
+				if (type == 1){
+					document.getElementById("r1p1").innerHTML = rando(1, 36);
+				} else {
+					document.getElementById("r1p1").innerHTML = elements[`${rando(1, 36)}`];
+				}
+				document.getElementById("r1p2").innerHTML = "؟؟؟";
+			}
+        </script>
+
+
+
+    </head>
+    <body>
+		<div class="header">
+			<a href="index.html" class="logo">سوال ساز رندوم</a>
+			<div class="header-right">
+				<a class="menu" href="index.html">صفحۀ اصلی</a>
+			</div>
+		</div>
+		
+		<p class="list">سوال از جدول تناوبی (1 تا 36)</span></p>
+		
+		<p class="list"><span data-icon="space"></span></p>
+		
+		<div class="settings">
+		</div>
+		<div class="buttonsline"><p dir="rtl"><button class="button_gen" role="button" onclick = "Generate()">بساز!</button></div>
+		<div class="result">
+			<p dir="rtl">
+				<span id="r1p1"></span>
+				<span id="r1p2"></span>
+			</p>
+		<div>
+    </body>
+</html>

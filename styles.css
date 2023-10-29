@@ -2,6 +2,7 @@
 .list {
 	text-align: center;
 	font-size: 36px;
+	justify-content: center;
 } 
 .result {
 	text-align: center;
