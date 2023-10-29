@@ -23,25 +23,39 @@
 				34:"سلنیم", 35:"برم", 36:"کریپتون"
 			};
 			
-			let res = "";
+			let res = ["", ""];
 			
 			addEventListener("keypress", logKey);
 			function logKey(e) {
 				if (e.code == "KeyX") {
 					Generate();
 					console.log("G");
+				} else if (e.code == "KeyZ") {
+					Answer();
+					console.log("G");
 				}
 			};
 
             function Generate(){
 				let type = rando(1, 2);
+				res[0] = type;
 				
 				if (type == 1){
-					document.getElementById("r1p1").innerHTML = rando(1, 36);
+					res[1] = rando(1, 36);
+					document.getElementById("r1p1").innerHTML = res[1];
 				} else {
-					document.getElementById("r1p1").innerHTML = elements[`${rando(1, 36)}`];
+					res[1] = rando(1, 36);
+					document.getElementById("r1p1").innerHTML = elements[`${res[1]}`];
 				}
 				document.getElementById("r1p2").innerHTML = "؟؟؟";
+			}
+			
+			function Answer(){
+				if (res[0] == 1){
+					document.getElementById("r1p2").innerHTML = elements[`${res[1]}`];
+				} else {
+					document.getElementById("r1p2").innerHTML = res[1];
+				}
 			}
         </script>
 
@@ -62,10 +76,13 @@
 		
 		<div class="settings">
 		</div>
-		<div class="buttonsline"><p dir="rtl"><button class="button_gen" role="button" onclick = "Generate()">بساز!</button></div>
+		<div class="buttonsline">
+			<span class="buttonsline"><span dir="rtl"><button class="button_ans" role="button" onclick = "Answer()">مشاهدۀ جواب</button></span>
+			<span class="buttonsline"><span dir="rtl"><button class="button_gen" role="button" onclick = "Generate()">بساز!</button></span>
+		</div>
 		<div class="result">
 			<p dir="rtl">
-				<span id="r1p1"></span>
+				<span id="r1p1"></span><br  />
 				<span id="r1p2"></span>
 			</p>
 		<div>
