@@ -1,0 +1,11 @@
+body{
+  font-size:8vmin;
+}
+
+[data-icon]{
+  display:inline-block;
+  height:1em;
+  width:1em;
+  /** adjust baseline alignment */
+  transform: translateY(0.13em);
+}
