@@ -25,7 +25,7 @@
 .section {
 	flex: none;
 	padding: 20px 20px 20px 10px;
-	width: 150px
+	width: 150px;
 }
 
 .section-title {
