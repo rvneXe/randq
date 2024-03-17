@@ -74,6 +74,7 @@
 	text-align: center;
 	font-size: 36px;
 }
+
 .result2 {
 	margin: 2px, 2px, 2px, 2px;
 	text-align: center;
@@ -288,4 +289,9 @@ body {
 		float: none;
 	}
 
+}
+
+.hidden {
+	display: none;
+	transform: translateY(-100%);
 }

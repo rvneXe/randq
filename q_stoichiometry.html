@@ -7,6 +7,7 @@
 
 	<link rel="stylesheet" href="styles.css">
 	<link rel="stylesheet" href="switch.css">
+	<link rel="stylesheet" href="checkbox.css">
 	<script src="https://cdn.jsdelivr.net/gh/nastyox/Rando.js@master/code/plain-javascript/2.0.0/rando-min.js"></script>
 	<script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.1.2/bignumber.min.js'></script>
 
@@ -19,6 +20,7 @@
 		let units_vol = ["lit", "mlit"];
 		let units_all = units_mass.concat(units_vol);
 
+		let gaslist = ["ammonia"];
 
 		let sm = [0.9, 0.8, 0.75, 0.7, 0.6, 0.5, 0.25, 0.2, 0.125];
 		let safesm = [1, 2, 4, 5, 8, 10, 16, 25];
@@ -29,6 +31,7 @@
 				mps: ["2", "3", "4", "2"],
 				formula: "(CH₃OH)" // Fe(NO<sub>3</sub>)<sub>2</sub>
 			},
+			ammonia: { name: "آمونیاک", mw: "17", formula: "(NH₃)" }
 		};
 
 		const unit_props = {
@@ -78,8 +81,9 @@
 					switch (massunit1) {
 						case "gram": mass1 = material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * (Math.floor(Math.random() * 9) + 1);
 							console.log("upscale, gram"); break;
-						case "mol": mass1 = BigNumber(material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * (Math.floor(Math.random() * 9) + 1)).div(BigNumber(Math.pow(10,Math.floor(-1 * Math.random() * 3))));
-							console.log("upscale, gram"); break;
+						case "mol": mass1 = BigNumber(material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * (Math.floor(Math.random() * 9) + 1)).div(BigNumber(10));
+							// case "mol": mass1 = BigNumber(material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * (Math.floor(Math.random() * 9) + 1)).div(BigNumber(Math.pow(10,Math.floor(-1 * Math.random() * 3))));
+							console.log("upscale, mol"); break;
 					} break;
 			}
 			let massunit2 = units_all[Math.floor(Math.random() * units_all.length)];
@@ -90,6 +94,28 @@
 
 			if (units_vol.includes(massunit1) || units_vol.includes(massunit2)) {
 				const s_stp = document.querySelector("#c_stp");
+				const s_mv = document.querySelector("#c_mv");
+				const s_den = document.querySelector("#c_den");
+				let tplist = [];
+				if (s_stp.checked) { tplist.push("stp") }
+				if (s_mv.checked) { tplist.push("mv") }
+				if (s_den.checked) { tplist.push("den") }
+
+				switch (tplist[Math.floor(Math.random() * tplist.length)]) {
+					case "stp": tp = -1; text_tp = "در شرایط STP، "; break;
+					case "mv":
+						if (!units_vol.includes(massunit1)) {
+							tp = (Math.floor(Math.random() * 20) + 10);
+							text_tp = "در شرایطی که جرم مولی گازها " + "<math><mfrac><mrow><mi>L</mi></mrow><mrow><mi>mol</mi></mrow></mfrac></math>" + tp + " است، ";
+						} else {
+							tp = BigNumber(mass1 * sm[Math.floor(Math.random() * sm.length)]);
+							text_tp = "در شرایطی که جرم مولی گازها " + "<math><mfrac><mrow><mi>L</mi></mrow><mrow><mi>mol</mi></mrow></mfrac></math>" + tp + " است، ";
+						} break;
+					case "den":
+						let gas = gaslist[Math.floor(Math.random() * gaslist.length)];
+						tp = BigNumber(material_props[`${gas}`].mw).div(BigNumber(safesm[Math.floor(Math.random() * safesm.length)]));
+						text_tp = "در شرایطی که چگالی گاز " + material_props[`${gas}`].name + material_props[`${gas}`].formula + "، " + "<math><mfrac><mrow><mi>g</mi></mrow><mrow><mi>L</mi></mrow></mfrac></math>" + tp + " است، ";
+						break;
 				}
 
 			} else {
@@ -140,7 +166,58 @@
 
 			<div class="settings-groups">
 				<div class="section-content">
+					<div class="section-entry"><span dir="rtl">واحد داده:</span>
+						<label class="container">
+							<input type="checkbox" id="unit1-gram" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">گرم</span>
 
+						<label class="container">
+							<input type="checkbox" id="unit1-mol" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">مول</span>
+					</div>
+
+					<div class="section-entry"><span dir="rtl">واحد خواسته:</span>
+						<label class="container">
+							<input type="checkbox" id="unit2-gram" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">گرم</span>
+
+						<label class="container">
+							<input type="checkbox" id="unit2-mol" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">مول</span>
+
+						<label class="container">
+							<input type="checkbox" id="unit2-ml" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">میلی‌لیتر</span>
+					</div>
+
+					<div class="section-entry" id="stp-switch"><span dir="rtl">شرایط:</span>
+						<label class="container">
+							<input type="checkbox" id="c_stp" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">STP</span>
+
+						<label class="container">
+							<input type="checkbox" id="c_mv" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">حجم مولی</span>
+
+						<label class="container">
+							<input type="checkbox" id="c_den" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">چگالی</span>
 					</div>
 				</div>
 			</div>
@@ -181,6 +258,22 @@
 			<span id="r2p3"></span>
 			<span id="r2p4"></span>
 		</p>
+
+
+		<script>
+			const gas_checkbox1 = document.querySelector("#unit2-ml");
+			const stp_checkbox = document.querySelector("#stp-switch");
+			console.log(gas_checkbox1);
+			stp_checkbox.style.visibility = "visible";
+
+			gas_checkbox1.addEventListener("change", () => {
+				if (gas_checkbox1.checked) {
+					stp_checkbox.classList.remove('hidden');
+				} else {
+					stp_checkbox.classList.add('hidden');
+				}
+			});
+		</script>
 </body>
 
 </html>
