@@ -1,0 +1,73 @@
+/* Hide the default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.container {
+  display: flex;
+  margin-left: .2em;
+  margin-right: .7em;
+}
+
+
+/* Create a custom checkbox */
+.cb-checkmark {
+  position: relative;
+  /* box-shadow: rgb(255, 84, 0) 0px 0px 0px 2px; */
+  background-color: rgba(146, 146, 146, 0.45);
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  flex-shrink: 0;
+  margin-top: -1px;
+  transition: all 0.2s ease 0s;
+  cursor: pointer;
+  transform-origin: 0px 10px;
+  border-radius: 4px;
+  margin: -1px 10px 0px 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.container input:checked ~ .cb-checkmark {
+  /* box-shadow: rgb(255, 84, 0) 0px 0px 0px 2px; */
+  background-color: #8C66FF;
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  flex-shrink: 0;
+  margin-top: -1px;
+  transition: all 0.2s ease 0s;
+  cursor: pointer;
+  transform-origin: 0px 10px;
+  border-radius: 4px;
+  margin: -1px 10px 0px 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.cb-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .cb-checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .cb-checkmark:after {
+  left: 0.45em;
+  top: 0.25em;
+  width: 0.25em;
+  height: 0.5em;
+  border: solid white;
+  border-width: 0 0.15em 0.15em 0;
+  transform: rotate(45deg);
+  transition: all 500ms ease-in-out;
+}
