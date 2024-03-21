@@ -124,31 +124,67 @@
 
 		function GenerateFuel(mat) {
 			let type = Math.floor(Math.random() * 2); // 0: Ask Oxygen  ,  1: Ask CO2 or H2O
-			let massunit1 = units_mass[Math.floor(Math.random() * units_mass.length)];
+
+			const s_stp = document.querySelector("#c_stp");
+			const s_mv = document.querySelector("#c_mv");
+			const s_den = document.querySelector("#c_den");
+			let tplist = [];
+			if (s_stp.checked) { tplist.push("stp") }
+			if (s_mv.checked) { tplist.push("mv") }
+			if (s_den.checked) { tplist.push("den") }
+
+			const mat_fuel = document.querySelector("#mat-fuel");
+			const mat_fuelgas = document.querySelector("#mat-fuelgas");
+
+			const u1gram = document.querySelector("#unit1-gram");
+			const u1mol = document.querySelector("#unit1-mol");
+			const u1lit = document.querySelector("#unit1-lit");
+			let u1list = [];
+			switch (material_props[`${mat}`].type) {
+				case "fuel":
+					u1list = [];
+					if (u1gram.checked) { u1list.push("gram") }
+					if (u1mol.checked) { u1list.push("mol") } break;
+				case "fuelgas":
+					u1list = [];
+					if (u1gram.checked) { u1list.push("gram") }
+					if (u1mol.checked) { u1list.push("mol") }
+					if (u1lit.checked) { u1list.push("lit") } break;
+			}
 			if (mat_fuelgas.checked) {
 				if (!u1gram.checked && !u1mol.checked && !u1lit.checked) { u1list = []; return "<span style='color: red;'>حداقل یک واحد را برای داده انتخاب کنید!</span>"; }
 			}
 			if (mat_fuel.checked) {
 				if (!u1gram.checked && !u1mol.checked) { u1list = []; return "<span style='color: red;'>حداقل یکی از واحدهای گرم و مول را برای داده انتخاب کنید!</span>"; }
 			}
+			let massunit1 = u1list[Math.floor(Math.random() * u1list.length)];
+
 			let mass1; switch (Math.floor(Math.random() * 2)) {
 				case 0: // Downscale the Molar mass
 					switch (massunit1) {
-						case "gram": mass1 = material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * sm[Math.floor(Math.random() * sm.length)];
-							console.log("downscale, gram"); break;
+						case "gram":
+						case "lit": mass1 = material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * sm[Math.floor(Math.random() * sm.length)];
+							break;
 						case "mol": mass1 = BigNumber(material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * sm[Math.floor(Math.random() * sm.length)]).div(BigNumber(10));
-							console.log("downscale, mol"); break;
+							break;
 					} break;
 				case 1:  // Upscale the Molar mass 
 					switch (massunit1) {
-						case "gram": mass1 = material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * (Math.floor(Math.random() * 9) + 1);
-							console.log("upscale, gram"); break;
+						case "gram":
+						case "lit": mass1 = material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * (Math.floor(Math.random() * 9) + 1);
+							break;
 						case "mol": mass1 = BigNumber(material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * (Math.floor(Math.random() * 9) + 1)).div(BigNumber(10));
 							// case "mol": mass1 = BigNumber(material_props[`${mat}`].mw * material_props[`${mat}`].mps[0] * (Math.floor(Math.random() * 9) + 1)).div(BigNumber(Math.pow(10,Math.floor(-1 * Math.random() * 3))));
-							console.log("upscale, mol"); break;
+							break;
 					} break;
 			}
-			let massunit2 = units_all[Math.floor(Math.random() * units_all.length)];
+
+			const u2gram = document.querySelector("#unit2-gram");
+			const u2mol = document.querySelector("#unit2-mol");
+			const u2lit = document.querySelector("#unit2-lit");
+			let u2list = [];
+			if (u2gram.checked) { u2list.push("gram") }
+			if (u2mol.checked) { u2list.push("mol") }
 			if (u2lit.checked) {
 				if (!s_stp.checked && !s_mv.checked && !s_den.checked) {
 					return "<span style='color: red;'>حداقل یک مورد را برای شرایط فشار و دما انتخاب کنید.</span>";
@@ -156,20 +192,15 @@
 				u2list.push("lit");
 			}
 			if (!u2gram.checked && !u2mol.checked && !u2lit.checked) { u1list = []; return "<span style='color: red;'>حداقل یک واحد را برای خواسته انتخاب کنید!</span>"; }
+			let massunit2 = u2list[Math.floor(Math.random() * u2list.length)];
+
 			let mat2;
 
 			let text_tp;
-			let v_stp;
+			let v_tp;
+			let m_tp;
 
 			if (units_vol.includes(massunit1) || units_vol.includes(massunit2)) {
-				const s_stp = document.querySelector("#c_stp");
-				const s_mv = document.querySelector("#c_mv");
-				const s_den = document.querySelector("#c_den");
-				let tplist = [];
-				if (s_stp.checked) { tplist.push("stp") }
-				if (s_mv.checked) { tplist.push("mv") }
-				if (s_den.checked) { tplist.push("den") }
-
 				switch (tplist[Math.floor(Math.random() * tplist.length)]) {
 					case "stp": v_tp = 22.4; text_tp = "در شرایط STP، ";
 						mass1 = BigNumber(mass1).times(BigNumber(7));
