@@ -59,6 +59,7 @@
 				Answer();
 			}
 		};
+		let ans;
 
 
 		/* const material_props = {
@@ -85,6 +86,40 @@
 			return matlist[Math.floor(Math.random() * matlist.length)];
 		}
 
+		function GenerateAnswer(mat, qtype, v1, u1, m2, u2, tp, mtp) {
+			let a;
+			switch (material_props[`${mat}`].type) {
+				case "fuelgas":
+				case "fuel":
+					switch (qtype) {
+						default:
+							let mv;
+							if (tp != 0) {	// 0: No tp needed  ,  d: density  ,  !d: molic volume
+								mv = tp.toString().replace("d", "");
+								if (tp.toString().charAt(0) == "d") {
+									mv = BigNumber(mv).div(BigNumber(material_props[`${mtp}`].mw));
+								}
+							}
+							a = v1;
+							console.log(a.toString());
+							if (u1 == "gram") {
+								a = BigNumber(a).div(BigNumber(material_props[`${mat}`].mw));
+							}
+							if (u1 == "lit") {
+								a = BigNumber(a).div(BigNumber(mv));
+							}
+							console.log(a.toString());
+							a = BigNumber(a).times(BigNumber(material_props[`${mat}`].mps[1])).div(BigNumber(material_props[`${mat}`].mps[0]));
+							if (u2 == "gram") {
+								a = BigNumber(a).times(BigNumber(32));
+							}
+							if (u2 == "lit") {
+								a = BigNumber(a).times(BigNumber(mv));
+							}
+							console.log(a.toString());
+							return a + " " + unit_props[`${u2}`].name + " " + material_props[`${m2}`].name; break;
+					} break;
+			}
 		}
 
 		function GenerateFuel(mat) {
@@ -136,30 +171,36 @@
 				if (s_den.checked) { tplist.push("den") }
 
 				switch (tplist[Math.floor(Math.random() * tplist.length)]) {
-					case "stp": tp = -1; text_tp = "در شرایط STP، "; break;
+					case "stp": v_tp = 22.4; text_tp = "در شرایط STP، ";
+						mass1 = BigNumber(mass1).times(BigNumber(7));
+						break;
 					case "mv":
 						if (!units_vol.includes(massunit1)) {
 							tp = (Math.floor(Math.random() * 20) + 10);
-							text_tp = "در شرایطی که جرم مولی گازها " + "<math><mfrac><mrow><mi>L</mi></mrow><mrow><mi>mol</mi></mrow></mfrac></math>" + tp + " است، ";
+							v_tp = tp.toString();
+							text_tp = "در شرایطی که حجم مولی گازها " + "<math><mfrac><mrow><mi>L</mi></mrow><mrow><mi>mol</mi></mrow></mfrac></math>" + tp + " است، ";
 						} else {
-							tp = BigNumber(mass1 * sm[Math.floor(Math.random() * sm.length)]);
-							text_tp = "در شرایطی که جرم مولی گازها " + "<math><mfrac><mrow><mi>L</mi></mrow><mrow><mi>mol</mi></mrow></mfrac></math>" + tp + " است، ";
+							tp = BigNumber(mass1).times(sm[Math.floor(Math.random() * sm.length)]);
+							v_tp = tp.toString();
+							text_tp = "در شرایطی که حجم مولی گازها " + "<math><mfrac><mrow><mi>L</mi></mrow><mrow><mi>mol</mi></mrow></mfrac></math>" + tp + " است، ";
 						} break;
 					case "den":
-						let gas = gaslist[Math.floor(Math.random() * gaslist.length)];
-						tp = BigNumber(material_props[`${gas}`].mw).div(BigNumber(safesm[Math.floor(Math.random() * safesm.length)]));
-						text_tp = "در شرایطی که چگالی گاز " + material_props[`${gas}`].name + material_props[`${gas}`].formula + "، " + "<math><mfrac><mrow><mi>g</mi></mrow><mrow><mi>L</mi></mrow></mfrac></math>" + tp + " است، ";
+						m_tp = gaslist[Math.floor(Math.random() * gaslist.length)];
+						tp = BigNumber(material_props[`${m_tp}`].mw).div(BigNumber(safesm[Math.floor(Math.random() * safesm.length)]));
+						v_tp = String("d" + tp);
+						text_tp = "در شرایطی که چگالی گاز " + material_props[`${m_tp}`].name + material_props[`${m_tp}`].formula + "، " + "<math><mfrac><mrow><mi>g</mi></mrow><mrow><mi>L</mi></mrow></mfrac></math>" + tp + " است، ";
 						break;
 					default:
 						return "<span style='color: red;'>حداقل یک مورد را برای شرایط فشار و دما انتخاب کنید.</span>";
 				}
 
 			} else {
-				text_tp = "";
+				text_tp = ""; v_tp = 0;
 			}
 
 			switch (type) {
 				default:
+					ans = GenerateAnswer(mat, type, mass1, massunit1, "o2", massunit2, v_tp, m_tp);
 					return text_tp + "برای سوختن کامل " + mass1 + " " + unit_props[`${massunit1}`].name + material_props[`${mat}`].name
 						+ material_props[`${mat}`].formula + "،" + " به چند " + unit_props[`${massunit2}`].name + "گاز اکسیژن نیاز داریم؟";
 					break;
@@ -176,6 +217,10 @@
 				case "err": inft = "<span style='color: red;'>حداقل یک دسته‌بندی از مواد را انتخاب کنید.</span>"
 			}
 			document.getElementById("r1").innerHTML = `${inft}`;
+		}
+
+		function Answer() {
+			document.getElementById("a1").innerHTML = `${ans}`;
 		}
 	</script>
 
@@ -298,12 +343,29 @@
 			</div>
 		</div>
 
+		<div class="column">
+			<div class="section">
+				<h2 class="section-title">جواب</h2>
+			</div>
+
+			<div class="section-content">
+				<div class="section-entry">
+					<p class="result2" dir="rtl" id="a1">
+						<span id="r1p1">‌</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
 	</div>
 	<div class="buttonsline" style="margin-top: 1em;">
 		<p dir="rtl">
 			<button class="button_gen" role="button" onclick="GenerateOutput()"><img src="keyicons/x.png"
 					height="26px" />
 				<span class="buttontext"> بساز!</span></button>
+
+			<button class="button_ans" role="button" onclick="Answer()"><img src="keyicons/z.png" height="26px" />
+				<span class="buttontext"> مشاهدۀ جواب</span></button>
 	</div>
 	<script>
 		const gas_checkbox1 = document.querySelector("#unit1-lit");
