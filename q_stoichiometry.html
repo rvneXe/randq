@@ -81,6 +81,12 @@
 		function GenerateFuel(mat) {
 			let type = Math.floor(Math.random() * 2); // 0: Ask Oxygen  ,  1: Ask CO2 or H2O
 			let massunit1 = units_mass[Math.floor(Math.random() * units_mass.length)];
+			if (mat_fuelgas.checked) {
+				if (!u1gram.checked && !u1mol.checked && !u1lit.checked) { u1list = []; return "<span style='color: red;'>حداقل یک واحد را برای داده انتخاب کنید!</span>"; }
+			}
+			if (mat_fuel.checked) {
+				if (!u1gram.checked && !u1mol.checked) { u1list = []; return "<span style='color: red;'>حداقل یکی از واحدهای گرم و مول را برای داده انتخاب کنید!</span>"; }
+			}
 			let mass1; switch (Math.floor(Math.random() * 2)) {
 				case 0: // Downscale the Molar mass
 					switch (massunit1) {
@@ -99,6 +105,13 @@
 					} break;
 			}
 			let massunit2 = units_all[Math.floor(Math.random() * units_all.length)];
+			if (u2lit.checked) {
+				if (!s_stp.checked && !s_mv.checked && !s_den.checked) {
+					return "<span style='color: red;'>حداقل یک مورد را برای شرایط فشار و دما انتخاب کنید.</span>";
+				}
+				u2list.push("lit");
+			}
+			if (!u2gram.checked && !u2mol.checked && !u2lit.checked) { u1list = []; return "<span style='color: red;'>حداقل یک واحد را برای خواسته انتخاب کنید!</span>"; }
 			let mat2;
 
 			let text_tp;
@@ -128,6 +141,8 @@
 						tp = BigNumber(material_props[`${gas}`].mw).div(BigNumber(safesm[Math.floor(Math.random() * safesm.length)]));
 						text_tp = "در شرایطی که چگالی گاز " + material_props[`${gas}`].name + material_props[`${gas}`].formula + "، " + "<math><mfrac><mrow><mi>g</mi></mrow><mrow><mi>L</mi></mrow></mfrac></math>" + tp + " است، ";
 						break;
+					default:
+						return "<span style='color: red;'>حداقل یک مورد را برای شرایط فشار و دما انتخاب کنید.</span>";
 				}
 
 			} else {
