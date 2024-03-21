@@ -16,7 +16,9 @@
 
 	<script>
 		// const materials = ["nacl", "feno32", "brcl", "ammonia", "methanole"];
-		let materials = ["methanol"];
+		let fuels = ["methanol"];
+		let gasfuels = ["methane"];
+
 		let units_mass = ["mol", "gram"];
 		let units_vol = ["lit", "mlit"];
 		let units_all = units_mass.concat(units_vol);
@@ -32,7 +34,14 @@
 				mps: ["2", "3", "4", "2"],
 				formula: "(CH₃OH)" // Fe(NO<sub>3</sub>)<sub>2</sub>
 			},
-			ammonia: { name: "آمونیاک", mw: "17", formula: "(NH₃)" }
+			methane: {
+				name: "گاز متان ", type: "fuelgas", mw: "16",
+				mps: ["1", "2", "2", "1"],
+				formula: "(CH₄)"
+			},
+			ammonia: { name: "آمونیاک", mw: "17", formula: "(NH₃)" },
+			o2: { name: "گاز اکسیژن" },
+			err: { type: "err" }
 		};
 
 		const unit_props = {
