@@ -64,7 +64,18 @@
 		}; */
 
 		function SelectMat() {
-			return materials[Math.floor(Math.random() * materials.length)];
+			const mat_fuel = document.querySelector("#mat-fuel");
+			const mat_fuelgas = document.querySelector("#mat-fuelgas");
+			let matlist = [];
+			if (mat_fuel.checked) { matlist = matlist.concat(fuels); }
+			if (mat_fuelgas.checked) { matlist = matlist.concat(gasfuels); }
+			if (!mat_fuel.checked && !mat_fuelgas.checked) {
+				return "err";
+			}
+
+			return matlist[Math.floor(Math.random() * matlist.length)];
+		}
+
 		}
 
 		function GenerateFuel(mat) {
@@ -136,7 +147,9 @@
 			let material = SelectMat();
 
 			switch (material_props[`${material}`].type) {
-				case "fuel": inft = GenerateFuel(material); break;
+				case "fuel":
+				case "fuelgas": inft = GenerateFuel(material); break;
+				case "err": inft = "<span style='color: red;'>حداقل یک دسته‌بندی از مواد را انتخاب کنید.</span>"
 			}
 			document.getElementById("r1").innerHTML = `${inft}`;
 		}
@@ -162,6 +175,28 @@
 
 			<div class="settings-groups">
 				<div class="section-content">
+					<div class="section-entry"><span dir="rtl">نوع واکنش:</span>
+						<label class="container">
+							<input type="checkbox" id="r-combustion" checked="">
+							<div class="cb-checkmark" style="background-color: #3a2c63;"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">سوختن</span>
+					</div>
+
+					<div class="section-entry"><span dir="rtl">نوع واکنش دهنده:</span>
+						<label class="container">
+							<input type="checkbox" id="mat-fuel" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">سوخت مایع</span>
+
+						<label class="container">
+							<input type="checkbox" id="mat-fuelgas" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">سوخت گازی</span>
+					</div>
+
 					<div class="section-entry"><span dir="rtl">واحد داده:</span>
 						<label class="container">
 							<input type="checkbox" id="unit1-gram" checked="">
