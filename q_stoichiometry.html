@@ -132,14 +132,9 @@
 		}
 
 		function GenerateOutput() {
-			let text_tp, text_data, text_req, text_end;
-
-			let tp;
-			let val1, unit1, mat1;
-			let val2, unit2, mat2;
-
 			let inft;
 			let material = SelectMat();
+
 			switch (material_props[`${material}`].type) {
 				case "fuel": inft = GenerateFuel(material); break;
 			}
@@ -179,6 +174,12 @@
 							<div class="cb-checkmark"></div>
 						</label>
 						<span dir="rtl" class="settings-entry-title">مول</span>
+
+						<label class="container">
+							<input type="checkbox" id="unit1-lit" checked="">
+							<div class="cb-checkmark"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">لیتر</span>
 					</div>
 
 					<div class="section-entry"><span dir="rtl">واحد خواسته:</span>
@@ -195,10 +196,10 @@
 						<span dir="rtl" class="settings-entry-title">مول</span>
 
 						<label class="container">
-							<input type="checkbox" id="unit2-ml" checked="">
+							<input type="checkbox" id="unit2-lit" checked="">
 							<div class="cb-checkmark"></div>
 						</label>
-						<span dir="rtl" class="settings-entry-title">میلی‌لیتر</span>
+						<span dir="rtl" class="settings-entry-title">لیتر</span>
 					</div>
 
 					<div class="section-entry" id="stp-switch"><span dir="rtl">شرایط:</span>
@@ -240,31 +241,49 @@
 
 	</div>
 	<div class="buttonsline" style="margin-top: 1em;">
-		<p dir="rtl"><button class="button_gen" role="button" onclick="GenerateOutput()"><img src="keyicons/x.png"
+		<p dir="rtl">
+			<button class="button_gen" role="button" onclick="GenerateOutput()"><img src="keyicons/x.png"
 					height="26px" />
 				<span class="buttontext"> بساز!</span></button>
 	</div>
-		<script>
-			const gas_checkbox1 = document.querySelector("#unit2-ml");
-			const stp_checkbox = document.querySelector("#stp-switch");
-			console.log(gas_checkbox1);
-			stp_checkbox.style.visibility = "visible";
+	<script>
+		const gas_checkbox1 = document.querySelector("#unit1-lit");
+		const gas_checkbox2 = document.querySelector("#unit2-lit");
+		const stp_checkbox = document.querySelector("#stp-switch");
+		stp_checkbox.style.visibility = "visible";
+		gas_checkbox1.addEventListener("change", () => {
+			if (gas_checkbox1.checked || gas_checkbox2.checked) {
+				stp_checkbox.classList.remove('hidden');
+			} else if (!gas_checkbox1.checked && !gas_checkbox2.checked){
+				stp_checkbox.classList.add('hidden');
+			}
+		});
 
-			gas_checkbox1.addEventListener("change", () => {
-				if (gas_checkbox1.checked) {
-					stp_checkbox.classList.remove('hidden');
-				} else {
-					stp_checkbox.classList.add('hidden');
-				}
-			});
-		</script>
+		gas_checkbox2.addEventListener("change", () => {
+			if (gas_checkbox1.checked || gas_checkbox2.checked) {
+				stp_checkbox.classList.remove('hidden');
+			} else if (!gas_checkbox1.checked && !gas_checkbox2.checked){
+				stp_checkbox.classList.add('hidden');
+			}
+		});
+
+		const com_checkbox = document.querySelector("#r-combustion");
+		com_checkbox.addEventListener("change", () => {
+			com_checkbox.checked = true;
+		});
+	</script>
 </body>
 <div class="floating-container">
-	<a href="https://github.com/aL1NaZ4R/randq-fa" target="_blank" rel="noopener noreferrer"><div class="floating-button">
-		<svg height="64" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="50" data-view-component="true" style="fill: white !important;">
-			<path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
-		</svg>
-	</div></a>
+	<a href="https://github.com/aL1NaZ4R/randq-fa" target="_blank" rel="noopener noreferrer">
+		<div class="floating-button">
+			<svg height="64" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="50" data-view-component="true"
+				style="fill: white !important;">
+				<path
+					d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z">
+				</path>
+			</svg>
+		</div>
+	</a>
 </div>
 
 </html>
