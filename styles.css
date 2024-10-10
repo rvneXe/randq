@@ -278,19 +278,6 @@ body {
 	float: right;
 }
 
-@media screen and (max-width:500px) {
-	.header a {
-		float: none;
-		display: block;
-		text-align: left;
-	}
-
-	.header-right {
-		float: none;
-	}
-
-}
-
 .hidden {
 	display: none;
 	transform: translateY(-100%);
