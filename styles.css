@@ -249,13 +249,13 @@ body {
 
 .header {
 	overflow: hidden;
-	background-color: #302e38;
+	background-color: #f1f1f1;
 	padding: 20px 10px;
 }
 
 .header a {
 	float: left;
-	color: rgb(255, 255, 255);
+	color: black;
 	text-align: center;
 	padding: 12px;
 	text-decoration: none;
@@ -270,7 +270,7 @@ body {
 }
 
 .header a.menu {
-	background-color: #7145f7;
+	background-color: dodgerblue;
 	color: white;
 }
 

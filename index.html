@@ -2,82 +2,18 @@
 	<link rel="preconnect" href="//fdn.fontcdn.ir">
 	<link rel="preconnect" href="//v1.fontapi.ir">
 	<link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet">
-
     <head>
 		<link rel="stylesheet" href="styles.css">
     </head>
-
-	<style>
-		@viewport { width: device-width; zoom: 1.0; }
-		@-ms-viewport { width: device-width; }
-
-		figure {
-			display: grid;
-			border-radius: 1rem;
-			overflow: hidden;
-			cursor: pointer;
-			width: 250px;
-		}
-	
-		figure>* {
-			grid-area: 1/1;
-			transition: .4s;
-		}
-	
-		figure figcaption {
-			display: grid;
-			align-items: end;
-			font-family: sans-serif;
-			font-size: 2.3rem;
-			font-weight: bold;
-			color: #fff;
-			padding: .75rem;
-			background: var(--c, #0009);
-			clip-path: inset(0 var(--_i, 100%) 0 0);
-			margin: -1px;
-			@media screen and (max-width:900px) {
-				--_i: 0%;
-			}
-		}
-		
-		figure:hover figcaption {
-			--_i: 0%;
-		}
-	
-		figure:hover img {
-			transform: scale(1.2);
-		}
-		
-		@supports not (-webkit-mask-clip: text) {
-			figure figcaption {
-				-webkit-mask: none;
-				color: #fff;
-			}
-		}
-	</style>
-
-    <body>
+    <body onload="showRandomNumber();">
 		<div class="header">
 			<a href="index.html" class="logo">سوال ساز رندوم</a>
 			<div class="header-right">
-				<a class="menu" style="width: 120px;" href="#home">صفحۀ اصلی</a>
+				<a class="menu" href="#home">صفحۀ اصلی</a>
 			</div>
 		</div>
-		<div style="display: grid; grid-template-columns: auto auto auto;">
-			<figure>
-				<img src="cardtest.jpg" alt="Mountains">
-				<figcaption>The Day</figcaption>
-			</figure>
-			<figure>
-				<img src="cardtest.jpg" alt="Mountains">
-				<figcaption>The Day</figcaption>
-			</figure>
-			<figure style="-c:#fff5">
-				<img src="cardtest.jpg" alt="Mountains">
-				<figcaption>The Night</figcaption>
-			</figure>
-		</div>
 		<div class="list">
+			<span dir="rtl">لیست سوال ساز ها:<br /><br /></span>
 			<a class="button_list" href="q_units.html">تبدیل واحد ها</a>
 			<a class="button_list" href="q_periodic.html">جدول تناوبی (۱ تا ۳۶)</a>
 			<!-- <a class="button_gen" href="#home">صفحۀ اصلی</a>-->
