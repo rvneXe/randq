@@ -1,4 +1,4 @@
-@import url('https://v1.fontapi.ir/css/Vazir');
+@import url('https://v1.fontapi.ir/css/Sahel');
 
 .columnview {
 	display: flex;
@@ -97,7 +97,7 @@
 	position: relative;
 	font-size: 18px;
 	bottom: 6px;
-	font-family: Vazir, sans-serif;
+	font-family: Sahel, sans-serif;
 }
 
 /* Buttons */
@@ -120,7 +120,7 @@
 	box-sizing: border-box;
 	color: #FFFFFF;
 	cursor: pointer;
-	font-family: Vazir, sans-serif;
+	font-family: Sahel, sans-serif;
 	font-size: 18px;
 	font-weight: 700;
 	line-height: 24px;
@@ -244,7 +244,7 @@ label:last-child span {
 body {
 	margin: 0;
 	background-color: #18171C;
-	font-family: Vazir, Arial, Helvetica, sans-serif;
+	font-family: Sahel, Arial, Helvetica, sans-serif;
 }
 
 .header {
