@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>سوال ساز جدول تناوبی</title>
 	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="loading.css">
 	<link rel="stylesheet" href="switch.css">
 	<link rel="stylesheet" href="checkbox.css">
 	<link rel="stylesheet" href="floating-button.css">
@@ -43,6 +44,10 @@
 </head>
 
 <body>
+	<div class="loadingScreen">
+		<img width="160px" height="160px" src="assets/loading.gif" alt="loading indicator" />
+	</div>
+
 	<div class="header">
 		<a href="index.html" class="logo">سوال ساز رندوم</a>
 		<div class="header-right">
@@ -169,6 +174,13 @@
 	</div>
 
 	<script>
+		var loadingScreen = document.querySelector(".loadingScreen");
+		window.addEventListener('load', function () {
+			loadingScreen.classList.add('fade-out');
+			loadingScreen.addEventListener('transitionend', function () {
+				loadingScreen.style.display = 'none';
+			}, { once: true });
+		})
 		const elem_names = {
 			1: "هیدروژن", 2: "هلیم", 3: "لیتیم",
 			4: "برلیم", 5: "بور", 6: "کربن",
