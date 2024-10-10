@@ -219,6 +219,10 @@
 
 		function Answer() {
 			const ans = document.getElementById("a1");
+			if (!res[0]){
+				ans.innerHTML = "<span style='color: red;'>ابتدا سوال را بسازید!</span>";
+				return;
+			}
 			if (res[0] == 1) {
 				ans.innerHTML = elem_names[`${res[1].value}`];
 			} else {
