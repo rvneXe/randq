@@ -6,62 +6,40 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>سوال ساز جدول تناوبی</title>
 	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="switch.css">
+	<link rel="stylesheet" href="checkbox.css">
+	<link rel="stylesheet" href="floating-button.css">
 	<script src="https://cdn.jsdelivr.net/gh/nastyox/Rando.js@master/code/plain-javascript/2.0.0/rando-min.js"></script>
 	<!-- <script src="keys.js"></script> -->
-	<script>
 
-		const elements = {
-			1: "هیدروژن", 2: "هلیم", 3: "لیتیم",
-			4: "برلیم", 5: "بور", 6: "کربن",
-			7: "نیتروژن", 8: "اکسیژن", 9: "فلوئور",
-			10: "نئون", 11: "سدیم", 12: "منیزیم",
-			13: "آلومینیم", 14: "سیلیسیم", 15: "فسفر",
-			16: "گوگرد", 17: "کلر", 18: "آرگون",
-			19: "پتاسیم", 20: "کلسیم", 21: "اسکاندیم",
-			22: "تیتانیم", 23: "وانادیم", 24: "کروم",
-			25: "منگنز", 26: "آهن", 27: "کبالت",
-			28: "نیکل", 29: "مس", 30: "روی",
-			31: "گالیم", 32: "ژرمانیم", 33: "آرسنیک",
-			34: "سلنیم", 35: "برم", 36: "کریپتون"
-		};
-
-		let res = ["", ""];
-
-		addEventListener("keypress", logKey);
-		function logKey(e) {
-			if (e.code == "KeyX") {
-				Generate();
-			} else if (e.code == "KeyZ") {
-				Answer();
-			}
-		};
-
-		function Generate() {
-			let type = rando(1, 2);
-			res[0] = type;
-
-			if (type == 1) {
-				res[1] = rando(1, 36);
-				document.getElementById("r1p1").innerHTML = res[1];
-			} else {
-				res[1] = rando(1, 36);
-				document.getElementById("r1p1").innerHTML = elements[`${res[1]}`];
-			}
-			document.getElementById("r1p2").innerHTML = "؟؟؟";
+	<style>
+		@import url('https://fonts.cdnfonts.com/css/google-sans');
+		#periodic { margin: 0 auto; border-spacing: 3px; }
+		@media (min-width:701px) and (max-width:800px) {
+			#periodic { border-spacing: 2px; }
 		}
-
-		function Answer() {
-			if (res[0] == 1) {
-				document.getElementById("r1p2").innerHTML = elements[`${res[1]}`];
-			} else {
-				document.getElementById("r1p2").innerHTML = res[1];
-			}
+		@media (max-width:700px) {
+			#periodic { border-spacing: 1px; }
 		}
-	</script>
+		#periodic tr td { background-color: #535353; transition: background-color 300ms ease; width: 32px; height: 32px; cursor: pointer; border-radius: 5px; border-width: 3px; font-family: 'Product Sans Medium', sans-serif;}
+		@media (max-width:700px) {
+			#periodic tr td { border-width: 2px; }
+		}
+		#periodic tr td.empty { background-color: transparent; cursor: auto; border: none; text-align: left; }
+		#periodic tr.spacer td { height: 10px; }
+		#periodic tr td sup { font-size: 9px; display: block; text-align: center; }
+		#periodic tr td { font-size: 13px; transition: font-size 300ms ease; text-align: center; position: relative; }
+		#periodic tr td.sel { font-size: 15px; transition: font-size 300ms ease; background-color: #8C66FF; transition: background-color 300ms ease; box-shadow: 0 0 25px -5px #8C66FF;}
 
-
-
+		.hs_button {
+			font-size: 15px; font-weight: 400; font-family: Sahel, sans-serif;
+			background-color: #8C66FF; box-shadow: 0 0 25px -5px #8C66FF; border-radius: 5px; outline: 0 solid transparent; border: 0;
+			margin-top: .4em; margin-left: 1em;
+			padding: 2px 2px;
+		}
+	</style>
 </head>
 
 <body>
@@ -72,7 +50,84 @@
 		</div>
 	</div>
 	<br />
+
 	<div class="columnview">
+		<div class="column">
+			<div class="section">
+				<h2 class="section-title">تنظیمات</h2>
+			</div>
+
+			<div class="settings-groups">
+				<div class="section-content">
+					<div class="section-entry"><span dir="rtl">نوع سوال:</span>
+						<label class="container">
+							<input type="checkbox" id="r-combustion" checked="">
+							<div class="cb-checkmark" style="background-color: #3a2c63;"></div>
+						</label>
+						<span dir="rtl" class="settings-entry-title">عدد اتمی</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="column">
+			<div class="section">
+				<h2 class="section-title">عناصر انتخابی</h2>
+				<button class="hs_button button" role="button" onclick="TogglePT()">مخفی کردن</button>
+			</div>
+
+			<div class="section-content">
+				<table id="periodic">
+					<tr id="p1">
+						<td id="H" title="Hydrogen" class="sel"><sup>1</sup>H</td>
+						<td class="empty" colspan="16"></td>
+						<td id="He" title="Helium" class="sel"><sup>2</sup>He</td>
+					</tr>
+					<tr id="p2">
+						<td id="Li" title="Lithium" class="sel"><sup>3</sup>Li</td>
+						<td id="Be" title="Beryllium" class="sel"><sup>4</sup>Be</td>
+						<td class="empty" id="desc" colspan="10" rowspan="2"></td>
+						<td id="B" title="Boron" class="sel"><sup>5</sup>B</td>
+						<td id="C" title="Carbon" class="sel"><sup>6</sup>C</td>
+						<td id="N" title="Nitrogen" class="sel"><sup>7</sup>N</td>
+						<td id="O" title="Oxygen" class="sel"><sup>8</sup>O</td>
+						<td id="F" title="Fluorine" class="sel"><sup>9</sup>F</td>
+						<td id="Ne" title="Neon" class="sel"><sup>10</sup>Ne</td>
+					</tr>
+					<tr id="p3">
+						<td id="Na" title="Sodium" class="sel"><sup>11</sup>Na</td>
+						<td id="Mg" title="Magnesium" class="sel"><sup>12</sup>Mg</td>
+						<td id="Al" title="Aluminium" class="sel"><sup>13</sup>Al</td>
+						<td id="Si" title="Silicon" class="sel"><sup>14</sup>Si</td>
+						<td id="P" title="Phosphorus" class="sel"><sup>15</sup>P</td>
+						<td id="S" title="Sulfur" class="sel"><sup>16</sup>S</td>
+						<td id="Cl" title="Chlorine" class="sel"><sup>17</sup>Cl</td>
+						<td id="Ar" title="Argon" class="sel"><sup>18</sup>Ar</td>
+					</tr>
+					<tr id="p4">
+						<td id="K" title="Potassium" class="sel"><sup>19</sup>K</td>
+						<td id="Ca" title="Calcium" class="sel"><sup>20</sup>Ca</td>
+						<td id="Sc" title="Scandium" class="sel"><sup>21</sup>Sc</td>
+						<td id="Ti" title="Titanium" class="sel"><sup>22</sup>Ti</td>
+						<td id="V" title="Vanadium" class="sel"><sup>23</sup>V</td>
+						<td id="Cr" title="Chromium" class="sel"><sup>24</sup>Cr</td>
+						<td id="Mn" title="Manganese" class="sel"><sup>25</sup>Mn</td>
+						<td id="Fe" title="Iron" class="sel"><sup>26</sup>Fe</td>
+						<td id="Co" title="Cobalt" class="sel"><sup>27</sup>Co</td>
+						<td id="Ni" title="Nickel" class="sel"><sup>28</sup>Ni</td>
+						<td id="Cu" title="Copper" class="sel"><sup>29</sup>Cu</td>
+						<td id="Zn" title="Zinc" class="sel"><sup>30</sup>Zn</td>
+						<td id="Ga" title="Gallium" class="sel"><sup>31</sup>Ga</td>
+						<td id="Ge" title="Germanium" class="sel"><sup>32</sup>Ge</td>
+						<td id="As" title="Arsenic" class="sel"><sup>33</sup>As</td>
+						<td id="Se" title="Selenium" class="sel"><sup>34</sup>Se</td>
+						<td id="Br" title="Bromine" class="sel"><sup>35</sup>Br</td>
+						<td id="Kr" title="Krypton" class="sel"><sup>36</sup>Kr</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
 		<div class="column">
 			<div class="section">
 				<h2 class="section-title">سوال</h2>
@@ -81,7 +136,7 @@
 			<div class="section-content">
 				<div class="section-entry">
 					<p class="result2" dir="rtl">
-						<span id="r1p1">‌</span>
+						<span id="q1">‌</span>
 					</p>
 				</div>
 			</div>
@@ -95,7 +150,7 @@
 			<div class="section-content">
 				<div class="section-entry">
 					<p class="result2" dir="rtl">
-						<span id="r1p2">‌</span>
+						<span id="a1">‌</span>
 					</p>
 				</div>
 			</div>
@@ -112,6 +167,95 @@
 			</span>
 		</span>
 	</div>
+
+	<script>
+		const elem_names = {
+			1: "هیدروژن", 2: "هلیم", 3: "لیتیم",
+			4: "برلیم", 5: "بور", 6: "کربن",
+			7: "نیتروژن", 8: "اکسیژن", 9: "فلوئور",
+			10: "نئون", 11: "سدیم", 12: "منیزیم",
+			13: "آلومینیم", 14: "سیلیسیم", 15: "فسفر",
+			16: "گوگرد", 17: "کلر", 18: "آرگون",
+			19: "پتاسیم", 20: "کلسیم", 21: "اسکاندیم",
+			22: "تیتانیم", 23: "وانادیم", 24: "کروم",
+			25: "منگنز", 26: "آهن", 27: "کبالت",
+			28: "نیکل", 29: "مس", 30: "روی",
+			31: "گالیم", 32: "ژرمانیم", 33: "آرسنیک",
+			34: "سلنیم", 35: "برم", 36: "کریپتون"
+		};
+
+		var elements = ['', 'H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na',
+		'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr',
+		'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr'];
+
+		var state = [];
+		var cells = document.getElementById('periodic').getElementsByTagName('td');
+
+		let res = ["", ""];
+
+		addEventListener("keypress", logKey);
+		function logKey(e) {
+			if (e.code == "KeyX") { Generate();} else if (e.code == "KeyZ") { Answer(); }
+		};
+
+		function Generate() {
+			const que = document.getElementById("q1");
+			const ans = document.getElementById("a1");
+			let type = rando(1, 2);
+			let seled = Object.keys(state).filter(key => state[key] === true);
+			res[0] = type;
+
+			if (type == 1) {
+				res[1] = rando(seled);
+				que.innerHTML = res[1].value + ' کیه؟';
+			} else {
+				res[1] = rando(seled);
+				que.innerHTML = elem_names[`${res[1].value}`] + ' چنده؟';
+			}
+			ans.innerHTML = "";
+			console.log(state);
+			console.log(Object.keys(state).filter(key => state[key] === true));
+		}
+
+		function Answer() {
+			const ans = document.getElementById("a1");
+			if (res[0] == 1) {
+				ans.innerHTML = elem_names[`${res[1].value}`];
+			} else {
+				ans.innerHTML = res[1].value;
+			}
+		}
+
+		function TogglePT(){
+			document.getElementById('periodic').classList.toggle('hidden2');
+		}
+
+		function toggle_elem(td) {
+			/* var n = elements.indexOf(td.id);
+			var sel = state[n];
+			state[n] = !sel; */
+			if (td.className == "sel") { 
+				var n = elements.indexOf(td.id);
+				state[n] = false;
+				td.className = "";
+			} else { 
+				var n = elements.indexOf(td.id);
+				state[n] = true;
+				td.className = "sel";
+			}
+		}
+
+		function init_cell(cell) {
+ 			cell.onclick = function () { toggle_elem(cell); };
+		}
+
+ 		for (var i = 0; i < cells.length; i++) {
+   			if (cells[i].className !== 'empty') init_cell(cells[i]);
+			if (cells[i].className == 'sel'){
+				state[elements.indexOf(cells[i].id)] = true;
+			}
+  		}
+	</script>
 </body>
 
 <div class="floating-container">
