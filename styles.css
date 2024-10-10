@@ -111,12 +111,14 @@
 	border-radius: 4px;
 }
 
-.button_gen {
+.button {
 	position: relative;
+	margin-left: 2px;
+	margin-right: 2px;
 	text-align: center;
-	background: #7145f7;
+	background: #818181;
 	border-radius: 999px;
-	box-shadow: #6443c7 0 10px 20px -10px;
+	box-shadow: #ececec 0 0px 20px -5px;
 	box-sizing: border-box;
 	color: #FFFFFF;
 	cursor: pointer;
@@ -135,27 +137,9 @@
 	border: 0;
 }
 
-.button_ans {
-	background: #6829ab;
-	border-radius: 999px;
-	box-shadow: #5E5DF0 0 10px 20px -10px;
-	box-sizing: border-box;
-	color: #FFFFFF;
-	cursor: pointer;
-	font-family: Vazir, sans-serif;
-	font-size: 18px;
-	font-weight: 700;
-	line-height: 24px;
-	opacity: 1;
-	outline: 0 solid transparent;
-	padding: 8px 18px;
-	-webkit-user-select: none;
-	user-select: none;
-	touch-action: manipulation;
-	width: fit-content;
-	word-break: break-word;
-	border: 0;
-}
+.gen { background: #7145f7; box-shadow: #632fff 0 0 20px -5px; }
+.ans { background: #6829ab; box-shadow: #8b1fff 0 0 20px -5px; }
+.deb { background: #ca720d; box-shadow: #e9bb57 0 0 20px -5px; }
 
 .button_gen:not(:disabled):hover, .button_gen:not(:disabled):focus {
 	outline: 0;

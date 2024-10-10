@@ -391,14 +391,16 @@
 
 	</div>
 	<div class="buttonsline" style="margin-top: 1em;">
-		<p dir="rtl">
-			<button class="button_gen" role="button" onclick="GenerateOutput()"><img src="keyicons/x.png"
-					height="26px" />
-				<span class="buttontext"> بساز!</span></button>
-
-			<button class="button_ans" role="button" onclick="Answer()"><img src="keyicons/z.png" height="26px" />
-				<span class="buttontext"> مشاهدۀ جواب</span></button>
-	</div>
+		<span dir="rtl"><button class="button ans" role="button" onclick="Answer()"><img src="keyicons/z.png" height="26px" />
+				<span class="buttontext"> مشاهدۀ جواب</span>
+			</button>
+		</span>
+		<span dir="rtl"><button class="button gen" role="button" onclick="Generate()"><img src="keyicons/x.png" height="26px" />
+				<span class="buttontext"> بساز!</span>
+			</button>
+		</span>
+	</span>
+</div>
 	<script>
 		const gas_checkbox1 = document.querySelector("#unit1-lit");
 		const gas_checkbox2 = document.querySelector("#unit2-lit");
