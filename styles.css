@@ -235,6 +235,8 @@ body {
 	overflow: hidden;
 	background-color: #302e38;
 	padding: 20px 10px;
+	width: 100%;
+	min-width: 500px;
 }
 
 .header a {
