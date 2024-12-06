@@ -56,8 +56,7 @@
 	flex-wrap: wrap;
 	flex-direction: row-reverse;
 	text-transform: none;
-	margin-block-start: 1em;
-	margin-block-end: 1em;
+	margin-block-start: 0.4em;
 }
 
 .settings-entry-title {
